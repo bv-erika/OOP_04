@@ -6,25 +6,46 @@ public class EmployeeTest {
 
 	public static void main(String[] args) {
 		
-		Employee emp1 = new Employee();
-		emp1.setName("John");
-		emp1.setSalary(10000);
+		Employee[] empArray = new Employee[5];
 		
-		Employee emp2 = new Employee();
-		emp2.setName("Jane");
-		emp2.setSalary(15000);
+		for (int i=0; i<empArray.length; i++) {
+			empArray[i] = new Employee();
+			empArray[i].setName("Emp_" + (i+1));
+			empArray[i].setSalary((i+1)*10000);
+		}
+		listArray(empArray);
 		
-		System.out.println(emp1.displayInfo());
-		System.out.println(emp2.displayInfo());
+		System.out.println("Best paid: " + 
+					empArray[hasMaxSalary(empArray)].getName());
 		
-		boolean res = emp1.hasHigherSalary(emp2);
-		if (res)
-			System.out.println(emp1.getName() + " fizetése nagyobb");
-		else
-			System.out.println(emp1.getName() + " fizetése kisebb");
-		
-		System.out.println(emp2.compareSalary(emp1).getName());
-		
+		int lower = 25000;
+		int upper = 35000;
+		System.out.println("Num of salaries in range: " + 
+				countSalaries(empArray, lower, upper));
 	}
 
+	private static int countSalaries(Employee[] array, int lower, int upper) {
+		int counter = 0;
+		for (int i=0; i<array.length; i++) {
+			if (array[i].isInRange(lower, upper))
+				counter++;
+		}
+		return counter;
+	}
+	
+	private static int hasMaxSalary(Employee[] array) {
+		int maxIndex = 0;
+		for (int i=1; i<array.length; i++) {
+			if (array[i].hasHigherSalary(array[maxIndex])) {
+				maxIndex = i;
+			}
+		}
+		return maxIndex;
+	}
+	
+	private static void listArray(Employee[] array) {
+		for (Employee item : array) {
+			System.out.println(item.displayInfo());
+		}
+	}
 }

@@ -40,7 +40,7 @@ public class Employee {
 		return false;
 	}
 	
-	private double getTax() {
+	public double getTax() {
 		return Math.round(this.salary*0.16);
 	}
 	
